@@ -1,5 +1,6 @@
 package meechapooch.coords.ingame;
 
+import meechapooch.coords.Coords;
 import meechapooch.coords.utils.Vector2D;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,7 +29,7 @@ public class Guide extends BukkitRunnable {
         transform = CoordTransform.getFromNames(player.getWorld().getName(),staticTo.getWorld().getName());
         if(transform == CoordTransform.INCOMPATIBLE) {
             this.cancel();
-            if(staticTo.getWorld().getName().equals("world") || staticTo.getWorld().getName().equals("world_nether")) new FlashingMessage(player,"Go to overworld or nether",ChatColor.RED,.3,5).start();
+            if(staticTo.getWorld().getName().equals("world") || staticTo.getWorld().getName().equals("world_nether")) new FlashingMessage(player,"Go to overworld or nether",ChatColor.RED, .3,5).start();
             else new FlashingMessage(player,"Go to End",ChatColor.BLUE,.3,5).start();
         }
         to = transform.getTransformedLocation(staticTo);
@@ -40,7 +41,10 @@ public class Guide extends BukkitRunnable {
         if(distance <= 2) {
             this.cancel();
             //Todo call back to this guide task after player has switched dimensions
-            if(transform == CoordTransform.SAME) new FlashingMessage(player, "Bipity Bopity, you've now trespassed someone's property!", ChatColor.WHITE, 0.5, 2).start();
+            if(transform == CoordTransform.SAME) {
+                new FlashingMessage(player, Coords.plugin.getConfig().getString("onArrival.message"), ChatColor.WHITE, 0.5, 2).start();
+                player.playSound(player.getLocation(), Coords.plugin.getConfig().getString("onArrival.sound.id"), (float) Coords.plugin.getConfig().getDouble("onArrival.sound.volume"), (float) Coords.plugin.getConfig().getDouble("onArrival.sound.pitch"));
+            }
             else if(transform == CoordTransform.TO_OVERWORLD) new FlashingMessage(player, "Go to the nether!", ChatColor.RED, 0.5, 3).start();
             else new FlashingMessage(player, "Go to the overworld!", ChatColor.GREEN, 0.5, 3).start();
         }

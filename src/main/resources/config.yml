@@ -1,0 +1,6 @@
+onArrival:
+  message: "You've arrived at your destination!"
+  sound:
+    id: "minecraft:entity.player.levelup"
+    volume: 1.0
+    pitch: 1.0

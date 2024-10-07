@@ -31,6 +31,8 @@ public final class Coords extends JavaPlugin {
 
         getLogger().info("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET!");
 
+        saveDefaultConfig();
+
         FileSaving.setupFileLocation();
         FileSaving.buildDatabase();
 
@@ -62,6 +64,7 @@ public final class Coords extends JavaPlugin {
         subCommands.put("lists", new ListsCommand());
         subCommands.put("send", new SendCommand());
         subCommands.put("personalinfo", new InfoCommand());
+        subCommands.put("reload", new ReloadCommand());
     }
 
     @Override
