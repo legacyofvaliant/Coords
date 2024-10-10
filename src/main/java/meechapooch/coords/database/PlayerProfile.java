@@ -1,7 +1,9 @@
 package meechapooch.coords.database;
 
 import meechapooch.coords.Coords;
+import meechapooch.coords.ingame.FlashingMessage;
 import meechapooch.coords.ingame.Guide;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -27,7 +29,9 @@ public class PlayerProfile {
         Player player = Coords.plugin.getServer().getPlayer(name);
         Guide guide = new Guide(player, location);
         lastActiveGuide = guide;
-        guide.runTaskTimer(Coords.plugin, 0, 1);
+        guide.runTaskTimer(Coords.plugin, 60, 1);
+        new FlashingMessage(player, Coords.plugin.getConfig().getString("onGuideStart.message"), ChatColor.WHITE, 0.5, 2).start();
+        player.playSound(player.getLocation(), Coords.plugin.getConfig().getString("onGuideStart.sound.id"), (float) Coords.plugin.getConfig().getDouble("onGuideStart.sound.volume"), (float) Coords.plugin.getConfig().getDouble("onGuideStart.sound.pitch"));
     }
 
     public List<String> getAllPaths() {
@@ -43,7 +47,11 @@ public class PlayerProfile {
     }
 
     public void stopGuide() {
-        if (isGuided()) lastActiveGuide.cancel();
+        if (isGuided()) {
+            lastActiveGuide.cancel();
+            new FlashingMessage(getPlayer(), Coords.plugin.getConfig().getString("onGuideStop.message"), ChatColor.WHITE, 0.5, 2).start();
+            getPlayer().playSound(getPlayer().getLocation(), Coords.plugin.getConfig().getString("onGuideStop.sound.id"), (float) Coords.plugin.getConfig().getDouble("onGuideStop.sound.volume"), (float) Coords.plugin.getConfig().getDouble("onGuideStop.sound.pitch"));
+        }
     }
 
     public Player getPlayer() {

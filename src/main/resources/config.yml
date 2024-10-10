@@ -4,3 +4,17 @@ onArrival:
     id: "minecraft:entity.player.levelup"
     volume: 1.0
     pitch: 1.0
+
+onGuideStart:
+  message: "Your guide has started!"
+  sound:
+    id: "minecraft:entity.player.levelup"
+    volume: 1.0
+    pitch: 1.0
+
+onGuideStop:
+  message: "Your guide has stopped!"
+  sound:
+    id: "minecraft:entity.player.levelup"
+    volume: 1.0
+    pitch: 1.0
